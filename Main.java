@@ -1,14 +1,15 @@
 class Solution {
-   public int maxSubArray(int[] nums) {
-      int sum=0;
-      int max=-99999;
-      for(int i=0;i<nums.length;i++)
-      {
-         sum+=nums[i];
-        max = Math.max(max,sum);
-        if(sum<0)sum=0;
-      }
-      return max;
-
+   public int maxProfit(int[] prices) {
+       int min = 10000000;
+       int today=0;
+       int ans=0;
+       for(int i=0;i<prices.length;i++)
+       {
+           min = Math.min(min,prices[i]);
+           today = prices[i]-min;
+           ans=Math.max(ans,today);
+       }
+       return ans;
+       
    }
 }
