@@ -1,23 +1,29 @@
-import java.util.ArrayList;
-import java.util.List;
-
 class Solution {
-  public static int bi(int n,int k)
-   {
-      if(n==k||k==0) return 1;
-      else{
-         return bi(n-1,k)+bi(n-1,k-1);
-      }
-   }
+   public void nextPermutation(int[] nums) {
    
+      int i1 = nums.length-2;
+      int i2=nums.length-1;
+      while(i1>=0&&nums[i1]>=nums[i1+1])i1--;
+      if(i1>=0){while(i2>=0&&nums[i2]<nums[i1])i2--;
+      int temp=nums[i1];
+      nums[i1]=nums[i2];
+      nums[i2]=temp;
+      }
 
-   public List<Integer> getRow(int rowIndex) {
-       List<Integer> ans = new ArrayList<Integer>();
-      for(int i=0;i<rowIndex;i++)
+      i2=nums.length-1;
+      i1++;
+      while(i1<i2)
       {
-         ans.add(bi(rowIndex,i));
+      int temp=nums[i1];
+      nums[i1]=nums[i2];
+      nums[i2]=temp;
+      i1++;
+      i2--;
+
       }
-      return ans;
-   }
    
+   
+   }
 }
+       
+ 
