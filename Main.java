@@ -1,29 +1,14 @@
 class Solution {
-   public void nextPermutation(int[] nums) {
-   
-      int i1 = nums.length-2;
-      int i2=nums.length-1;
-      while(i1>=0&&nums[i1]>=nums[i1+1])i1--;
-      if(i1>=0){while(i2>=0&&nums[i2]<nums[i1])i2--;
-      int temp=nums[i1];
-      nums[i1]=nums[i2];
-      nums[i2]=temp;
-      }
-
-      i2=nums.length-1;
-      i1++;
-      while(i1<i2)
+   public int maxSubArray(int[] nums) {
+      int sum=0;
+      int max=-99999;
+      for(int i=0;i<nums.length;i++)
       {
-      int temp=nums[i1];
-      nums[i1]=nums[i2];
-      nums[i2]=temp;
-      i1++;
-      i2--;
-
+         sum+=nums[i];
+        max = Math.max(max,sum);
+        if(sum<0)sum=0;
       }
-   
-   
+      return max;
+
    }
 }
-       
- 
