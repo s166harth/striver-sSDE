@@ -1,31 +1,18 @@
+import java.util.ArrayList;
+
 class Solution {
-   public void setZeroes(int[][] matrix) {
-     Boolean bool = false;
-     int r = matrix.length;
-     int c= matrix[0].length;
-     for(int i=0;i<r;i++)
-     {
-         for(int j=0;j<c;j++)
-         {
-            if(matrix[i][j]==0)
-            {
-               matrix[i][0]=-1;
-               matrix[0][j]=-1;
-            }
-         }
-        
-          
-     }
-     for(int i=0;i<r;i++)
-     {
-        for(int j=0;j<c;j++)
-        {
-           if(matrix[i][j]==-1)
-           {
-              matrix[i][j]=0;
+   public List<List<Integer>> generate(int numRows) {
+       List<List<Integer>> list = new ArrayList<>();
+       for (int i = 0; i < numRows; i++) {
+           list.add(new ArrayList<>());
+           for (int j = 0; j < i + 1; j++) {
+               if (j == 0 || j == i) {
+                   list.get(i).add(1);
+               }else {
+                   list.get(i).add(list.get(i-1).get(j)+list.get(i-1).get(j-1));
+               }
+
            }
-        }
-     }
-       
+       }return list;
    }
 }
