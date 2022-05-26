@@ -1,31 +1,26 @@
+import java.util.Arrays;
+
 class Solution {
-   static void transpose(int[][] matrix)
-   {
-      int n=matrix.length;
-      for(int i=0;i<n;i++)
+   public int[][] merge(int[][] intervals) {
+ 
+      int[][] ans = new int[intervals.length][2];
+      Arrays.sort(intervals, (a,b)->Integer.compare(a[0],b[0]));
+      ans[0][0] = intervals[0][0];
+      ans[0][1] = intervals[0][1];
+      int length =0;
+      for(int i=0; i<intervals.length;i++)
       {
-         for(int j=0;j<i;j++)
-         {
-            int temp=matrix[j][i];
-            matrix[j][i]=matrix[i][j];
-            matrix[i][j]=temp;
+         if(ans[length][1] >= intervals[i][0] ) {
+            ans[length][1] = Math.max(ans[length][1],intervals[i][1]);
+     } else {
+         length++;
+         ans[length][0] = intervals[i][0];
+         ans[length][1] = intervals[i][1];
+         
+     }
+     
 
-         }
       }
-
-   }
-   public void rotate(int[][] matrix) {
-       transpose(matrix);
-       for(int i=0;i<matrix.length;i++)
-       {
-          int low=0;
-          int high=matrix.length-1;
-          while(low<high)
-          {
-             int temp = matrix[i][low];
-             matrix[i][low]=matrix[i][high];
-             matrix[i][high]=temp;
-          }
-       }
+      return Arrays.copyOfRange(ans,0,length+1);
    }
 }
