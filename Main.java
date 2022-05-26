@@ -1,27 +1,31 @@
 class Solution {
+   static void transpose(int[][] matrix)
+   {
+      int n=matrix.length;
+      for(int i=0;i<n;i++)
+      {
+         for(int j=0;j<i;j++)
+         {
+            int temp=matrix[j][i];
+            matrix[j][i]=matrix[i][j];
+            matrix[i][j]=temp;
 
-   public void sortColors(int[] nums) {
-      int li=0;
-      int mid=0;
-      int hi=nums.length-1;
-       while(mid<=hi){
-         if(nums[mid]==0){
-             int temp=nums[li];
-             nums[li]=nums[mid];
-             nums[mid]=temp;
-             mid++;
-             li++;
          }
-               else if(nums[mid]==1){
-                       mid++;
-               }
-        else{
-            int temp2=nums[mid];
-             nums[mid]=nums[hi];
-             nums[hi]=temp2;
-             hi--;       
-             } 
+      }
+
+   }
+   public void rotate(int[][] matrix) {
+       transpose(matrix);
+       for(int i=0;i<matrix.length;i++)
+       {
+          int low=0;
+          int high=matrix.length-1;
+          while(low<high)
+          {
+             int temp = matrix[i][low];
+             matrix[i][low]=matrix[i][high];
+             matrix[i][high]=temp;
+          }
        }
    }
-   
-   }
+}
