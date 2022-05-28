@@ -1,26 +1,28 @@
-import java.util.Arrays;
-
 class Solution {
-   public int[][] merge(int[][] intervals) {
- 
-      int[][] ans = new int[intervals.length][2];
-      Arrays.sort(intervals, (a,b)->Integer.compare(a[0],b[0]));
-      ans[0][0] = intervals[0][0];
-      ans[0][1] = intervals[0][1];
-      int length =0;
-      for(int i=0; i<intervals.length;i++)
-      {
-         if(ans[length][1] >= intervals[i][0] ) {
-            ans[length][1] = Math.max(ans[length][1],intervals[i][1]);
-     } else {
-         length++;
-         ans[length][0] = intervals[i][0];
-         ans[length][1] = intervals[i][1];
-         
-     }
-     
+   static void swap(int[] num,int m,int n)
+   {
+      int temp = num[n];
+      num[n] = num[m];
+      num[m] = temp;
+   }
+   public void merge(int[] nums1, int m, int[] nums2, int n) {
+         for(int i=0;i<n;i++)
+         {
+            nums1[m+i]=nums2[i];
 
-      }
-      return Arrays.copyOfRange(ans,0,length+1);
+         }
+         int gap=(m+n)/2 + (m+n)%2;
+         int i=0;
+         
+        while (true) {
+            i = 0;
+            while (i < nums1.length-gap) {
+                if (nums1[i] > nums1[i+gap]) 
+                    swap(nums1, i, i+gap);
+                i++;
+            }
+            if (gap == 1) break;
+            gap = gap / 2 + gap % 2;
+        }
    }
 }
