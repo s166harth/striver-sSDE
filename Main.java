@@ -1,29 +1,30 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 class Solution {
-    public int superPow(int a, int[] b) {
-        a = a % 1337; 
-        if (a <= 1) return a;
-        
-        Map<Integer, Integer> map = new HashMap<>();  // power of a -> a^power mod 1337
-        Set<Integer> set = new HashSet<>();  // for O(1) search of existing value in the map
-		
-        int val = a, power = 1;
-        while (! set.contains(val)) {
-            map.put(power, val);
-            set.add(val);
-            val = (val * a) % 1337;
-            power++;
+    public int majorityElement(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i=0;i<nums.length;i++)
+        {
+            if(!map.containsKey(nums[i]))
+            {
+                map.put(nums[i], 1);
+                
+            }
+            else
+            {
+                int value = map.get(nums[i]);
+                map.put(nums[i], value+1);
+            }
         }
         
-        int reminder = 0;
-        for (int i = 0; i < b.length; i++) {
-            reminder = (reminder * 10 + b[i]) % set.size();
+        int element = 0;
+        
+        for(Map.Entry<Integer, Integer> m : map.entrySet())
+        {
+            if(m.getValue() > (nums.length/2))
+            {
+                element = m.getKey();
+            }
         }
         
-        return map.get(reminder);
+        return element;
     }
 }
