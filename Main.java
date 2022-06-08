@@ -1,14 +1,29 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 class Solution {
     public int superPow(int a, int[] b) {
-        int et=1140; //eulers toitent function, jump to leetcode article for details
-        int num=0;
-        for(int i=0;i<b.length;i++)
-
-        {
-            int exp = (int)Math.pow(10, b.length-1-i);
-            num+= b[i]*exp;
-
+        a = a % 1337; 
+        if (a <= 1) return a;
+        
+        Map<Integer, Integer> map = new HashMap<>();  // power of a -> a^power mod 1337
+        Set<Integer> set = new HashSet<>();  // for O(1) search of existing value in the map
+		
+        int val = a, power = 1;
+        while (! set.contains(val)) {
+            map.put(power, val);
+            set.add(val);
+            val = (val * a) % 1337;
+            power++;
         }
-        return (int)Math.pow(a,num%et)%1337;
+        
+        int reminder = 0;
+        for (int i = 0; i < b.length; i++) {
+            reminder = (reminder * 10 + b[i]) % set.size();
+        }
+        
+        return map.get(reminder);
     }
 }
