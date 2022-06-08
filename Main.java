@@ -1,17 +1,14 @@
-public double myPow(double x, int n) {
-    if (n == 0) {
-        return 1.0d;
-    } else if (n == 1) {
-        return x;
-    } else if (n == -1) {
-        return 1/x;
-    }
-    
-    if (n%2==0) {
-        double val = myPow(x,n/2);   
-        return val*val;
-    } else {
-        double val = myPow(x,(n-1)/2);  
-        return x*val*val;
+class Solution {
+    public int superPow(int a, int[] b) {
+        int et=1140; //eulers toitent function, jump to leetcode article for details
+        int num=0;
+        for(int i=0;i<b.length;i++)
+
+        {
+            int exp = (int)Math.pow(10, b.length-1-i);
+            num+= b[i]*exp;
+
+        }
+        return (int)Math.pow(a,num%et)%1337;
     }
 }
