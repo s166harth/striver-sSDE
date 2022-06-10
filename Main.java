@@ -1,33 +1,16 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-
 class Solution {
-    public List<Integer> majorityElement(int[] nums) {
-    List<Integer> ans = new ArrayList<>();
-    HashMap<Integer,Integer> hm=new HashMap<>();
-    for(int i=0;i<nums.length;i++)
-    {
-        if(hm.containsKey(nums[i]))
+    public int uniquePaths(int m, int n) {
+        int g = Math.max(m, n)-1;
+        int num=1;
+        int den=1;
+        for(int i=0;i<g;i++)
         {
-            int f=hm.get(nums[i]);
-            hm.put(nums[i], f++);
+            num *= m+n-2-i;
         }
-        else
+        for(int i=0;i<g;i++)
         {
-            hm.put(nums[i], 1);
+            den *= g-i;
         }
-    }
-    int floor = (int)Math.floor(nums.length/3);
-    Set<Integer> keys = hm.keySet();
-    for(Integer key: keys)
-    {
-        if(hm.get(key)>floor)
-        {
-            ans.add(key);
-        }
-    }
-    return ans;
+        return (int)(num/den);
     }
 }
