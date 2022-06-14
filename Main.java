@@ -3,41 +3,32 @@
 
  
 class Solution {
-    public class ListNode {
-        int val;
-         ListNode next;
-         ListNode() {}
-         ListNode(int val) { this.val = val; }
-         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-     }
-    public ListNode reverseList(ListNode head) {
-
-   
-           
-                
-                 if(head == null){
-                    return head;
-                }
-                
-                if(head != null && head.next == null){
-                    return head;
-                }
-                
-                ListNode prev = null;
-                ListNode cur = head;
-                ListNode nex = head.next;
-                while(nex!=null)
-                {
-                    cur.next=prev;
-                    prev=cur;
-                    cur=nex;
-                    nex=nex.next;
-                }
-                cur.next=prev;
-                return cur;
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        int i=1;
+        ListNode dummy = new ListNode(0,head);
+        ListNode prev = dummy;
+        ListNode curr = head;
+        while(i<left){
+           prev = curr;
+           curr = curr.next;
+            i++;
+        }
+        ListNode next = curr.next;
+        while(i<right){
+            ListNode temp = next.next;
+            next.next = curr;
+            curr = next;
+            next = temp;
+            i++;
+        }
+      
+       
+        ListNode first = prev.next;
+        prev.next = curr;
+        first.next = next;
         
-            }
-        
+        return dummy.next;
+    }
             
 
     }
