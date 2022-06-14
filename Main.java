@@ -1,45 +1,35 @@
 class Solution {
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode fast=head;
-        ListNode slow=head;
-        ListNode prev=head;
-        for(int i=0;i<n,i++)
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int exp=0;
+        int sum=0;
+        while(l1!=null&&l2!=null)
         {
-            fast=fast.next;
-        }
-        while(fast!=null)
-        {
-            slow=slow.next;
-            fast=fast.next;
-        }
-        while(prev.next!=slow)
-        {
-            prev=prev.next;
-        }
-        prev=slow.next;
-        return head;
-    }
+            sum=sum+ l1*(int)Math.pow(10, exp) + l2*(int)Math.pow(10, exp);
+            exp+=1;
+            l1=l1.next;
+            l2=l2.next;
 
-    class Solution {
-        public ListNode removeNthFromEnd(ListNode head, int n) {
-              
-             ListNode dummy = new ListNode(-1, head);
-            
-              ListNode fast = head;
-              ListNode slow = dummy;
-            
-              for(int i=1; i<=n; i++){
-                  fast = fast.next;
-              }
-            
-              while(fast != null){
-                  slow = slow.next;
-                  fast = fast.next;
-              }
-            
-              slow.next = slow.next.next;
-              return dummy.next;
-              
         }
+        if(l1!=null)
+        {
+            while(l1!=null)
+            {
+                sum=sum+ l1*(int)Math.pow(10, exp);
+            exp+=1;
+            l1=l1.next;
+
+            }
+        }
+        else if(l2!=null)
+        {
+            while(l2!=null)
+            {
+                sum=sum+ l2*(int)Math.pow(10, exp);
+            exp+=1;
+            l2=l2.next;
+
+            }
+        }
+        return sum;
     }
 }
