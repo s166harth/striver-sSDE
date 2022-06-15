@@ -1,12 +1,18 @@
-class Solution {
-    public void deleteNode(ListNode node) {
-        ListNode pre = null;
-    while(node.next != null)
-    {
-        pre = node;
-        node.val = node.next.val;
-        node = node.next;
-    }
-    pre.next = null;
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode nA = headA; 
+        ListNode nB = headB;
+        while(nA!=nB){
+            if(nA==null) // resetting logic
+                nA = headB;
+            else
+                nA = nA.next;
+
+            if(nB==null) // resetting logic
+                nB = headA;
+            else
+                nB = nB.next;
+        }
+        return nA;
     }
 }
