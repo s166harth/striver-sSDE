@@ -1,25 +1,28 @@
-import java.util.Stack;
-
 class Solution {
-    public int pairSum(ListNode head) {
-        ListNode temp=head;
-        if(head==null)return 0;
-        int len=0;
-        Stack<Integer> st= new Stack<>();
-        while(temp!=null)
-        {
-            st.push(temp.val);
-            temp=temp.next;
-            len++;
-
-        }
-        temp=head;
-        int max=-1;
-        for(int i=0;i<=(len/2)-1;i++)
-        {
-            max=(int)Math.max(temp.val+st.pop(), max);
-            temp=temp.next;
-        }
-        return max;
+    public ListNode rotateRight(ListNode head, int k) {
+    if(k <= 0 || head == null || head.next == null){
+    return head;
     }
-}
+    
+     ListNode last = head;
+     int length = 1;
+     while(last.next != null){
+         last = last.next;
+         length++;
+     }
+     
+     last.next = head;
+     int rotation = k % length;
+     int skip = length - rotation;
+     ListNode newLast = head;
+     
+     for(int i = 0; i < skip - 1; i++){
+         newLast = newLast.next;
+     }
+     head = newLast.next;
+     newLast.next = null;
+     
+     return head;
+    
+    }
+    }
