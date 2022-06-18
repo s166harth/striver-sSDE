@@ -1,33 +1,22 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 class Solution {
-    public List<List<Integer>> threeSum(int[] nums) {
-        Arrays.sort(nums);
-        List<List<Integer>> ans = new ArrayList<>(); 
-        for(int i=0; i<nums.length-2;i++) {               
-            // If we start with the same last element continue;
-            if (i > 0 && nums[i] == nums[i-1]) continue;                              
-                                                       
-                 
-            int j =i+1;                                           
-            int  k = nums.length-1;                      
-                                                       
-            while(j < k) {
-                int sum = nums[i] + nums[j] + nums[k];     
-                if (sum > 0) k -= 1; 
-                else if (sum < 0) j += 1; 
-                else { 
-                    ans.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                    j += 1; 
-                    
-                    while(nums[j] == nums[j-1] && j < k) j += 1;
-                    
-                }
-            } 
+    public int trap(int[] height) {
+        int n = height.length;
+        int[] maxRight = new int[n];
+        int[] maxLeft = new int[n];
+        maxLeft[0] = height[0];
+        for (int i = 1; i < n; i++) {
+            maxLeft[i] = Math.max(height[i], maxLeft[i - 1]);
         }
-        return ans;
-        
+        maxRight[n - 1] = height[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            maxRight[i] = Math.max(height[i], maxRight[i + 1]);
+        }
+        int trap = 0;
+        for (int i = 1; i < n - 1; i++) {
+            int min = Math.min(maxRight[i + 1], maxLeft[i - 1]);
+            if (min - height[i] > 0)
+                trap += Math.max(0, min - height[i]);
+        }
+        return trap;
     }
 }
