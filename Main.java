@@ -1,50 +1,33 @@
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 class Solution {
-    public Node copyRandomList(Node head) {
-         if(head==null){
-            return head;
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<>(); 
+        for(int i=0; i<nums.length-2;i++) {               
+            // If we start with the same last element continue;
+            if (i > 0 && nums[i] == nums[i-1]) continue;                              
+                                                       
+                 
+            int j =i+1;                                           
+            int  k = nums.length-1;                      
+                                                       
+            while(j < k) {
+                int sum = nums[i] + nums[j] + nums[k];     
+                if (sum > 0) k -= 1; 
+                else if (sum < 0) j += 1; 
+                else { 
+                    ans.add(Arrays.asList(nums[i], nums[j], nums[k]));
+                    j += 1; 
+                    
+                    while(nums[j] == nums[j-1] && j < k) j += 1;
+                    
+                }
+            } 
         }
-        Node iter=head;
+        return ans;
         
-        while(iter!=null)
-        {
-            Node dummy = new Node(iter.val);
-            dummy.next=iter.next;
-            iter.next=dummy;
-            iter=iter.next.next;
-        }
-        iter = head;
-    
-        while(iter!=null){
-            Node random = iter.random;
-            
-            if(random!=null){
-                iter.next.random = random.next;
-            }
-            
-            iter = iter.next.next;
-        }
-        Node p1 = head;
-        Node p2 = head.next;
-        Node newH = p2;
-        
-        while(true){
-            Node n1 = p2.next;
-            if(n1==null){
-                p1.next = null;
-                break;
-            }
-            
-            Node n2 = n1.next;
-            
-            p1.next = n1;
-            p2.next = n2;
-            
-            p1 = n1;
-            p2=n2;
-        }
-        
-        return newH;
     }
 }
