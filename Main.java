@@ -1,42 +1,36 @@
-class Sorter implements Comparator<Job>{                                    
-    public int compare(Job o1 ,Job o2){
-        return o2.profit-o1.profit;
-    }
-}
 class Solution
-{ 
-   
-    int[] JobScheduling(Job arr[], int n)
+{
+    //Function to get the maximum total value in the knapsack.
+    double fractionalKnapsack(int W, Item arr[], int n) 
     {
-        int total=0;
-        int count=0;
-        Arrays.sort(arr,new Sorter());
-        boolean[] avail=new boolean[101];
-    
-        for(int i=0;i<arr.length;i++)
-        {
-            if(avail[arr[i].deadline]==false)
-            {
-                total+=arr[i].profit;
-                avail[arr[i].deadline]=true;
-                count++;
-            }
-            else 
-            {
-                for(int j=arr[i].deadline-1;j>=1;j--)
-                {
-                    if(avail[j]==false)
-                    {
-                        count++;
-                        total+=arr[i].profit;
-                        avail[j]=true;
-                        break;
-                    }
+        // Your code here
+        
+        Arrays.sort(arr, new Comparator<Item>(){
+            public int compare(Item i1, Item i2){
+                double i2Ratio = (i2.value*1.0)/i2.weight;
+                double i1Ratio = (i1.value*1.0)/i1.weight;
+                if(i2Ratio>i1Ratio){
+                    return 1;
+                }else if(i2Ratio<i1Ratio){
+                    return -1;
                 }
+                    return 0;
+                
             }
+        });
+        
+        double maxVal = 0;
+        
+        for(Item it:arr){
+            if(W>0){
+                int weightTaken = it.weight <= W ? it.weight : W;
+                maxVal = maxVal + ((it.value*1.0)/it.weight)*weightTaken;
+                W = W-weightTaken;
+            }else{
+                break;
+            }
+            
         }
-   
-        return new int[]{count,total};
+        return maxVal;
     }
-    
 }
