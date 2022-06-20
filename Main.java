@@ -1,17 +1,24 @@
-class Solution{
-    ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int N){
-        // code here
-        ArrayList<Integer> list=new ArrayList<Integer>();
-        Collections.sort(arr);
-        req(0,list,arr,N,0);
-        return list;
+class Solution {
+    public List<List<Integer>> combinationSum(int[] arr, int target) {
+        List<List<Integer>> ans = new ArrayList<>();
+        
+        findCombinations(0, arr, target, ans, new ArrayList<>());
+        return ans;
     }
-    void req(int index,ArrayList<Integer> list,ArrayList<Integer> arr,int N,int sum){
-        list.add(sum);
-        if(index==N){ return ; }
-        for(int i=index; i<N; i++){
-            req(i+1,list,arr,N,sum+arr.get(i));
+    
+    public void findCombinations(int ind, int[] arr, int target, List<List<Integer>> ans, List<Integer> ds){
+        if(ind == arr.length){
+            if(target == 0){
+                ans.add(new ArrayList<>(ds));
+            }
+            return;
         }
         
+        if(arr[ind] <= target){
+            ds.add(arr[ind]);
+            findCombinations(ind, arr, target - arr[ind], ans, ds);
+            ds.remove(ds.size() - 1);
+        }
+        findCombinations(ind + 1, arr, target, ans, ds);
     }
- }
+}
