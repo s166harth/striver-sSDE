@@ -1,25 +1,38 @@
 class Solution {
-    public List<List<Integer>> combinationSum2(int[] arr, int target) {
-        Arrays.sort(arr);
-        List<List<Integer>> ans = new ArrayList<>();
-        findCombinations(0, arr, target, ans, new ArrayList<>());
-        
-        return ans;
+    public boolean isPali(String str){
+        int i = 0,j = str.length()-1;
+        while(i<j){
+            if(str.charAt(i)!=str.charAt(j)) return false;
+            i++;
+            j--;
+        }
+        return true;
     }
-    
-    public void findCombinations(int ind, int[] arr, int target, List<List<Integer>> ans, List<Integer> ds){
-        if(target == 0){
-            ans.add(new ArrayList<>(ds));
+    public void solve(String s , int i,int j,List<List<String>> ans,List<String> tmp){
+        if(i>j){
+            if(tmp.size()!=0){
+            ans.add(new ArrayList<>(tmp));
+            }
             return;
         }
-        
-        for(int i=ind; i<arr.length; i++){
-            if(i > ind && arr[i] == arr[i-1]) continue;
-            if(arr[i] > target) break;
-            
-            ds.add(arr[i]);
-            findCombinations(i + 1, arr, target - arr[i], ans, ds);
-            ds.remove(ds.size() - 1);
+        tmp.add(s.substring(i,i+1));
+        solve(s,i+1,j,ans,tmp);
+        tmp.remove(tmp.size()-1);
+        for(int k = i+1;k<=j;k++){
+            String P = s.substring(i,k+1);
+            if(isPali(P)){
+                tmp.add(P);
+                solve(s,k+1,j,ans,tmp);
+                tmp.remove(tmp.size()-1);
+            }
         }
+    }
+    public List<List<String>> partition(String s) {
+        int n = s.length();
+        List<List<String>> ans = new ArrayList<>();
+        List<String> tmp = new ArrayList<>();
+        solve(s,0,n-1,ans,tmp);
+        return ans;
+       
     }
 }
