@@ -1,27 +1,28 @@
 class Solution {
-    public String getPermutation(int n, int k) {
-        int fact = 1;
-        List<Integer> ds = new ArrayList<>();
-        for (int i = 1; i < n; i++) {
-            fact = fact * i;
-            ds.add(i);
-        }
-        ds.add(n);
+    List<List<Integer>> res = new ArrayList<>();
+    Set<Integer> set = new HashSet<>();
+    
+    public List<List<Integer>> permute(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        backtrack(nums, 0, list, nums.length);
+        return res;
         
-        StringBuilder ans = new StringBuilder();
-        k -= 1;
-        
-        while (true) {
-            ans.append(ds.get(k / fact));
-            ds.remove(k / fact);
-            
-            if (ds.size() == 0) {
-                break;
-            }
-            
-            k %= fact;
-            fact /= ds.size();
+    }
+    
+    private void backtrack(int[] nums, int current, List<Integer> list, int length){
+        if(list.size() == length){
+            this.res.add(new ArrayList(list));
+            return;
         }
-        return ans.toString();
+        
+        for (int i = 0; i < nums.length; i++){
+            if(set.contains(i))
+                continue;
+            list.add(nums[i]);
+            set.add(i);
+            backtrack(nums, i+1, list, length);
+            set.remove(i);
+            list.remove(list.size()-1);
+        }
     }
 }
