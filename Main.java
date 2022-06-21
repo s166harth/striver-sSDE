@@ -1,23 +1,19 @@
-double multiply(double number, int n)
-{
-    double ans=1.0;
-    for(int i=1; i<=n; i++)
-    {
-        ans=ans*number;
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int num=0;
+        if(nums.length==1){
+            return nums[0];
+        }
+        if(nums[nums.length-1]!=nums[nums.length-2]){
+            return nums[nums.length-1];
+        }
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==nums[i+1]){
+                i+=1;
+            }else{
+                num=nums[i];
+            }
+        }        
+        return num;
     }
-    return ans;
-}
-double findNthRootOfM(int n, long long m) {
-	// Write your code here.
-    double low=1, high=m;
-    double eps=1e-7;
-    while((high-low)>eps)
-    {
-        double mid=(high+low)/2.0;
-        if(multiply(mid, n)<m)
-            low=mid;
-        else 
-            high=mid;
-    }
-    return high;
 }
