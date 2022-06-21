@@ -1,19 +1,25 @@
 class Solution {
-    public int singleNonDuplicate(int[] nums) {
-        int num=0;
-        if(nums.length==1){
-            return nums[0];
+    public static int can_have_sum(int [] nums, int target, int i) {
+        int low=i, high = nums.length - 1;
+        while(low < high) {
+            int mid = low + ((high - low) >> 1) + 1;
+            if(nums[mid] < target) low = mid;
+            else high = mid -1;
         }
-        if(nums[nums.length-1]!=nums[nums.length-2]){
-            return nums[nums.length-1];
-        }
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]==nums[i+1]){
-                i+=1;
-            }else{
-                num=nums[i];
-            }
-        }        
-        return num;
-    }
+    
+    return low;
+}
+ public int triangleNumber(int[] nums) {
+     Arrays.sort(nums);
+     int cnt = 0;
+     for(int i=0;i<nums.length - 2; ++i) {
+         for(int g=i+1; g<nums.length - 1; ++g) {
+             int low = can_have_sum(nums, nums[i] + nums[g], i);
+             if(low - g > 0)
+                 cnt += low - g;
+            
+         }
+     }
+ return cnt;
+}
 }
