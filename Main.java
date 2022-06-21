@@ -1,28 +1,23 @@
-class Solution {
-    List<List<Integer>> res = new ArrayList<>();
-    Set<Integer> set = new HashSet<>();
-    
-    public List<List<Integer>> permute(int[] nums) {
-        List<Integer> list = new ArrayList<>();
-        backtrack(nums, 0, list, nums.length);
-        return res;
-        
+double multiply(double number, int n)
+{
+    double ans=1.0;
+    for(int i=1; i<=n; i++)
+    {
+        ans=ans*number;
     }
-    
-    private void backtrack(int[] nums, int current, List<Integer> list, int length){
-        if(list.size() == length){
-            this.res.add(new ArrayList(list));
-            return;
-        }
-        
-        for (int i = 0; i < nums.length; i++){
-            if(set.contains(i))
-                continue;
-            list.add(nums[i]);
-            set.add(i);
-            backtrack(nums, i+1, list, length);
-            set.remove(i);
-            list.remove(list.size()-1);
-        }
+    return ans;
+}
+double findNthRootOfM(int n, long long m) {
+	// Write your code here.
+    double low=1, high=m;
+    double eps=1e-7;
+    while((high-low)>eps)
+    {
+        double mid=(high+low)/2.0;
+        if(multiply(mid, n)<m)
+            low=mid;
+        else 
+            high=mid;
     }
+    return high;
 }
