@@ -1,25 +1,29 @@
 class Solution {
-    public static int can_have_sum(int [] nums, int target, int i) {
-        int low=i, high = nums.length - 1;
-        while(low < high) {
-            int mid = low + ((high - low) >> 1) + 1;
-            if(nums[mid] < target) low = mid;
-            else high = mid -1;
+    public int search(int[] nums, int target) {
+        int result = binarySearch(nums, 0, nums.length - 1, target);
+        return result;
+
+    }
+
+    public int binarySearch(int[] nums, int low, int high, int target) {
+        if (high >= low) {
+            int mid = low + (high - low) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            if (nums[mid] > target) {
+                int res1 = binarySearch(nums, low, mid - 1, target);
+                if (res1 == -1) {
+                    res1 = binarySearch(nums, mid + 1, high, target);
+                }
+                return res1;
+            }
+            int res2 = binarySearch(nums, mid + 1, high, target);
+            if (res2 == -1) {
+                res2 = binarySearch(nums, low, mid - 1, target);
+            }
+            return res2;
         }
-    
-    return low;
-}
- public int triangleNumber(int[] nums) {
-     Arrays.sort(nums);
-     int cnt = 0;
-     for(int i=0;i<nums.length - 2; ++i) {
-         for(int g=i+1; g<nums.length - 1; ++g) {
-             int low = can_have_sum(nums, nums[i] + nums[g], i);
-             if(low - g > 0)
-                 cnt += low - g;
-            
-         }
-     }
- return cnt;
-}
+        return -1;
+    }
 }
