@@ -1,76 +1,59 @@
-class LRUCache {
-    HashMap<Integer, LinkNode> map;
-    LinkNode head;
-    LinkNode last;
-    int capacity;
-
-    public LRUCache(int capacity) {
-        map = new HashMap<>();
-        head = new LinkNode();
-        last = new LinkNode();
-        head.next = last; // connect head and last node
-        last.prev = head;
-        this.capacity = capacity;
-    }
-
-    public int get(int key) {
-        LinkNode current = map.get(key);
-
-        if (current == null)
-            return -1;
-
-        moveToTop(current);
-        return current.val;
-    }
-
-    public void put(int key, int value) {
-        LinkNode current = map.get(key);
-
-        if (current != null) {
-            current.val = value;
-            moveToTop(current);
-            return;
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+		Queue<Points> queue = new LinkedList<>();
+        int countLevels = 0;
+        
+        int[][] directions = {{-1,0},{1,0},{0,-1},{0,1}};
+        //put all the rotten oranges in queue
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==2)
+                    queue.offer(new Points(i,j));
+            }
+        }        
+        //process all the oranges
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            boolean isUpdated = false;
+            while(size-->0){
+                Points point = queue.poll();
+                for(int[] direction : directions){
+                    int x = direction[0]  + point.x;
+                    int y = direction[1]  + point.y;
+                    if(x<0 || y<0 || y>m-1 || x>n-1)
+                        continue;
+                    if(grid[x][y]==1){
+                        isUpdated = true;
+                        grid[x][y] = 2;
+                        queue.offer(new Points(x,y));
+                    }
+                }
+            }
+            if(isUpdated)
+                countLevels++;
         }
+        
+        boolean isPossible = isPossible(grid,n,m);
+        return isPossible?countLevels:-1;
+	}
 
-        current = new LinkNode(key, value);
-        map.put(key, current);
-        addToTop(current);
-
-        if (capacity <= 0) // full
-            map.remove(disconnect(last.prev).key); // remove the last node
-        else
-            capacity--;
-    }
-
-    void moveToTop(LinkNode node) {
-        addToTop(disconnect(node));
-    }
-
-    void addToTop(LinkNode node) {
-        node.prev = head;
-        node.next = head.next;
-        head.next.prev = node;
-        head.next = node;
-    }
-
-    LinkNode disconnect(LinkNode node) {
-        node.prev.next = node.next;
-        node.next.prev = node.prev;
-        return node;
+    public static boolean isPossible(int[][] grid,int n,int m){
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==1)
+                    return false;
+            }
+        }
+        return true;
     }
 }
-
-class LinkNode {
-    int key;
-    int val;
-    LinkNode prev;
-    LinkNode next;
-
-    public LinkNode() {
-    }
-
-    public LinkNode(int key, int val) {
-        this.key = key;
-        this.val = val;
+class Points{
+    int x;
+    int y;
+    Points(int x,int y){
+        this.x = x;
+        this.y = y;
     }
 }
