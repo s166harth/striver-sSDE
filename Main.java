@@ -1,41 +1,76 @@
-import java.util.*;
+class LRUCache {
+    HashMap<Integer, LinkNode> map;
+    LinkNode head;
+    LinkNode last;
+    int capacity;
 
-import java.io.*;
+    public LRUCache(int capacity) {
+        map = new HashMap<>();
+        head = new LinkNode();
+        last = new LinkNode();
+        head.next = last; // connect head and last node
+        last.prev = head;
+        this.capacity = capacity;
+    }
 
- 
+    public int get(int key) {
+        LinkNode current = map.get(key);
 
-public class Solution{
+        if (current == null)
+            return -1;
 
-   static ArrayList<Integer> nextSmallerElement(ArrayList<Integer> arr, int n){
+        moveToTop(current);
+        return current.val;
+    }
 
-       // Write your code here.
+    public void put(int key, int value) {
+        LinkNode current = map.get(key);
 
-       Stack<Integer> s = new Stack<>();
+        if (current != null) {
+            current.val = value;
+            moveToTop(current);
+            return;
+        }
 
-       s.push(-1);
+        current = new LinkNode(key, value);
+        map.put(key, current);
+        addToTop(current);
 
-       ArrayList<Integer> ans = new ArrayList<>();
+        if (capacity <= 0) // full
+            map.remove(disconnect(last.prev).key); // remove the last node
+        else
+            capacity--;
+    }
 
-       for(int i=n-1;i>=0;i--){
+    void moveToTop(LinkNode node) {
+        addToTop(disconnect(node));
+    }
 
-           int cur = arr.get(i);
+    void addToTop(LinkNode node) {
+        node.prev = head;
+        node.next = head.next;
+        head.next.prev = node;
+        head.next = node;
+    }
 
-           while(s.peek()>=cur){
+    LinkNode disconnect(LinkNode node) {
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        return node;
+    }
+}
 
-               s.pop();
+class LinkNode {
+    int key;
+    int val;
+    LinkNode prev;
+    LinkNode next;
 
-           }
+    public LinkNode() {
+    }
 
-           ans.add(s.peek());
-
-           s.push(cur);
-
-       }
-
-       Collections.reverse(ans);
-
-       return ans;
-
-   }
-
+    public LinkNode(int key, int val) {
+        this.key = key;
+        this.val = val;
+    }
 }
