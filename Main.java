@@ -1,12 +1,19 @@
 class Solution {
-    public boolean isSymmetric(TreeNode root) {
-        return func(root.left,root.right);
-    }
-    public boolean func(TreeNode a,TreeNode b)
-    {
-        if(a==null&&b==null)return true;
-        if(a==null||b==null||a.val!=b.val)return false;
-        return func(a.left, b.right)&&func(a.right,b.left);
-
+    // Function to convert a binary tree into its mirror tree.
+    void mirror(Node node) {
+        // Your code here
+        if(node==null)
+        {
+            return;
+        }
+         mirror(node.right);
+        mirror(node.left);
+     
+            Node temp=node.left;
+            
+            node.left=node.right;
+            node.right=temp;
+       
+        return;
     }
 }
