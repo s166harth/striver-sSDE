@@ -1,15 +1,12 @@
 class Solution {
-    public int strStr(String haystack, String needle) {
-        int nl=needle.length();
-        int hl=haystack.length();
-        if(nl==0) return 0;
-        for(int i=0;i<hl;i++){
-            if(i+nl<=hl){
-                if(needle.equals(haystack.substring(i,i+nl))){
-                    return i;
-                }
-            }
-        }
-        return -1;
+    public boolean isSymmetric(TreeNode root) {
+        return func(root.left,root.right);
+    }
+    public boolean func(TreeNode a,TreeNode b)
+    {
+        if(a==null&&b==null)return true;
+        if(a==null||b==null||a.val!=b.val)return false;
+        return func(a.left, b.right)&&func(a.right,b.left);
+
     }
 }
