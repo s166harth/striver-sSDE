@@ -1,26 +1,24 @@
+import javax.swing.tree.TreeNode;
+
 class Solution {
-    public int[] twoSum(int[] numbers, int target) {
-        int[] ans = new int[2];
-        int s=0;
-        int end = numbers.length-1;
-        while(s<e)
+    public void flatten(TreeNode root) {
+        TreeNode cur=root;
+        TreeNode pre=root;
+        while(cur!=null)
         {
-            if(numbers[s]+numbers[end]<target)
+            if(cur.left!=null)
             {
-                s++;
+                pre = cur.left;
+                while(pre.right!=null)pre=pre.right;
+                pre.right=cur.right;
+                cur.right=cur.left;
+                cur.left=null;
+
+
+
             }
-            if(numbers[s]+numbers[end]>target)
-            {
-                end--;
-            }
-            if(numbers[s]+numbers[end]==target)
-            {
-                ans[0]=numbers[s];
-        ans[1]=numbers[end];
-        return ans;
-            }
+            cur=cur.right;
+
         }
-        return null;
-        
     }
 }
