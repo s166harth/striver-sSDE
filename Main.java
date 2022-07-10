@@ -1,24 +1,28 @@
-class Solution {
-    public Node flatten(Node head) {
-        
-        Node cur=head;
-        Node iter = head;
-        
-        while(cur!=null)
-        {
-            if(cur.child!=null)
-            {
-                iter=cur.child;
-                while(iter.next!=null)iter=iter.next;
-                iter.next=cur.next;
-                if(cur.next!=null) cur.next.prev=iter;
-                cur.next=cur.child;
-                cur.child.prev = cur;
-                cur.child=null;
+import java.util.PriorityQueue;
 
-            }
-            cur=cur.next;
+class KthLargest {
+    int k;
+    PriorityQueue<Integer> pq;
+    public KthLargest(int k, int[] nums) {
+        this.k = k;
+        pq = new PriorityQueue<>(k);
+        for(int i=0;i<nums.length;i++)
+        {
+            add(nums[i]);
         }
-        return head;
+
+    }
+    
+    public int add(int val) {
+        if(pq.size()<k)
+        {
+            pq.add(val);
+        }
+        else
+        {
+            pq.add(val);
+            pq.poll();
+        }
+        return pq.peek();
     }
 }
