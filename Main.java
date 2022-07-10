@@ -1,24 +1,24 @@
-import javax.swing.tree.TreeNode;
-
 class Solution {
-    public void flatten(TreeNode root) {
-        TreeNode cur=root;
-        TreeNode pre=root;
+    public Node flatten(Node head) {
+        
+        Node cur=head;
+        Node iter = head;
+        
         while(cur!=null)
         {
-            if(cur.left!=null)
+            if(cur.child!=null)
             {
-                pre = cur.left;
-                while(pre.right!=null)pre=pre.right;
-                pre.right=cur.right;
-                cur.right=cur.left;
-                cur.left=null;
-
-
+                iter=cur.child;
+                while(iter.next!=null)iter=iter.next;
+                iter.next=cur.next;
+                if(cur.next!=null) cur.next.prev=iter;
+                cur.next=cur.child;
+                cur.child.prev = cur;
+                cur.child=null;
 
             }
-            cur=cur.right;
-
+            cur=cur.next;
         }
+        return head;
     }
 }
