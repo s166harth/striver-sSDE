@@ -1,27 +1,18 @@
-import java.util.ArrayList;
-
 class Solution {
-    public static void dfs(int node, boolean vis[], ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> storeDfs) {
-        storeDfs.add(node);
-        //marking current node as visited
-        vis[node] = true;
-
-        //getting neighbour nodes
-        for(Integer it: adj.get(node)) {
-            if(vis[it] == false) {
-                dfs(it, vis, adj, storeDfs);
+    public int maxProduct(int[] nums) {
+        int max=nums[0],min=nums[0],res=nums[0],n=nums.length;
+        
+        for(int i=1;i<n;i++){
+            if(nums[i]<0){
+                int temp=max;
+                max=min;
+                min=temp;
             }
+            max=Math.max(nums[i],max*nums[i]);
+            min=Math.min(nums[i],min*nums[i]);
+            res=Math.max(res,max);
         }
+        return res;
     }
-    // Function to return a list containing the DFS traversal of the graph.
-    public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
-        ArrayList<Integer> ans = new ArrayList<>();
-        boolean[] vis = new boolean[V+1];
-        for(int i=1;i<V+1;i++)
-        {
-            if(!vis[i]) dfs(i,vis,adj,ans);
-        }
-        return ans;
-
-    }
+    
 }
