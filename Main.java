@@ -1,16 +1,28 @@
+import java.util.Arrays;
+
 class Solution {
-    public TreeNode insertIntoBST(TreeNode root, int val) {
-            if(root==null)
+    public int[] getAverages(int[] nums, int k) {
+        int len = 2*k +1;
+        int sum=0;
+        int[] ans = new int[nums.length];
+       Arrays.fill(ans, -1);
+       if(nums.length<len)return ans;
+       int s=0, e=0,i=k;
+       while(e<nums.length)
+       {
+            while(e<s+len)
             {
-                return new TreeNode(val);
+                sum+=nums[e];
+                e++;
             }
-            if(val<root.val)
-            {
-                root.left=insertIntoBST(root.left,val);
-            }
-            else{
-                root.right=insertIntoBST(root.right,val);
-            }
-        return root;
+        int avg = sum/len;
+        ans[i]=avg;
+        i++;
+        sum-=nums[s];
+        s++;
+
+       }
+       return ans;
+
     }
 }
