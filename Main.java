@@ -1,28 +1,14 @@
-import java.util.Arrays;
-
 class Solution {
-    public int[] getAverages(int[] nums, int k) {
-        int len = 2*k +1;
-        int sum=0;
-        int[] ans = new int[nums.length];
-       Arrays.fill(ans, -1);
-       if(nums.length<len)return ans;
-       int s=0, e=0,i=k;
-       while(e<nums.length)
-       {
-            while(e<s+len)
-            {
-                sum+=nums[e];
-                e++;
-            }
-        int avg = sum/len;
-        ans[i]=avg;
-        i++;
-        sum-=nums[s];
-        s++;
+    public String restoreString(String s, int[] indices) {
+        char[] ans= new char[s.length()];
+        
+        for(int i=0;i<s.length();i++)
+        {
+            ans[indices[i]] += s.charAt(i);
 
-       }
-       return ans;
+        }
+        return new String(ans);
+
 
     }
 }
